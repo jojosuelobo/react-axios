@@ -14,7 +14,7 @@ export default function Home() {
       console.log(response)
     } catch (err) {
       console.log(err)
-    } 
+    } // 29:14
   }
 
   useEffect(() => {
