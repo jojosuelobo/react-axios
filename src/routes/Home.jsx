@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React from 'react'
 import './Home.css'
+
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import axios from 'axios'
@@ -11,10 +12,13 @@ export default function Home() {
   const getPosts = async () => {
     try {
       const response = await axios.get("https://jsonplaceholder.typicode.com/posts")
-      console.log(response)
+      const data = response.data
+
+      setPosts(data)
+
     } catch (err) {
       console.log(err)
-    } // 29:14
+    }
   }
 
   useEffect(() => {
@@ -22,6 +26,17 @@ export default function Home() {
   }, [])
 
   return (
-    <h1>Home</h1>
+    <div className='home'>
+      <h1>Ultimos posts</h1>
+      {posts.length === 0 ? (<p>Carregando...</p>) : (
+        posts.map((post) => (
+          <div className='post' key={post.id}>
+            <h2>{post.title}</h2>
+            <p>{post.body}</p>
+            <Link to={`/posts/${post.id}`} className='btn'>Ler mais</Link>
+          </div> // 34:00
+        ))
+      )}
+    </div>
   )
 }
